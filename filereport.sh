@@ -4,10 +4,53 @@
 # Author: Bittivirta / FI2884270-1
 # Full license at /LICENSE
 
-# Usage: filereport.sh <file_name>
+# Usage: filereport.sh [options] <file_name>
+# Options:
+#   -v, --version       Show version information
+#   -m, --markdown      Output the report in markdown format
+#   --help              Show this help message
+
+VERSION="1.0"
+
+show_help() {
+    echo "Usage: filereport.sh [options] <file_name>"
+    echo "Options:"
+    echo "  -v, --version       Show version information"
+    echo "  -m, --markdown      Output the report in markdown format"
+    echo "  --help              Show this help message"
+}
+
+show_version() {
+    echo "filereport.sh version $VERSION"
+}
+
+if [ "$#" -eq 0 ]; then
+    show_help
+    exit 0
+fi
+
+FORMAT="plain"
+FILE=""
+while [[ "$1" =~ ^- && ! "$1" == "--" ]]; do
+    case $1 in
+        -v | --version )
+            show_version
+            exit 0
+            ;;
+        -m | --markdown )
+            FORMAT="markdown"
+            ;;
+        --help )
+            show_help
+            exit 0
+            ;;
+    esac
+    shift
+done
+if [[ "$1" == '--' ]]; then shift; fi
 
 if [ "$#" -ne 1 ]; then
-    echo "Error: Please provide a single file name as an argument."
+    echo "Error: Please provide a single file name as an argument." >&2
     exit 1
 fi
 
@@ -62,7 +105,7 @@ fi
 # File type information
 FILE_TYPE=$(file --mime-type -b "$FILE")
 
-# Calculate checksums directly on the file and extract hash only
+# Calculate checksums
 if [[ "$OSTYPE" == "darwin"* ]]; then
     MD5=$(md5 "$FILE" | awk '{print $NF}')
     SHA1=$(shasum -a 1 "$FILE" | awk '{print $1}')
@@ -75,29 +118,53 @@ else
     SHA512=$(sha512sum "$FILE" | awk '{print $1}')
 fi
 
-# Display report
-echo "File report"
-echo ""
-echo "Original file name:"
-echo "$FILE_NAME"
-echo ""
-echo "Original file path:"
-echo "$FILE"
-echo ""
-echo "File size:"
-echo "$FILE_SIZE bytes ($SIZE_HUMAN)"
-echo ""
-echo "Creation date:"
-echo "$CREATE_TIME"
-echo ""
-echo "Last modified:"
-echo "$MOD_TIME"
-echo ""
-echo "File type:"
-echo "$FILE_TYPE"
-echo ""
-echo "Algorithm   Hash digest"
-echo "MD5         $MD5"
-echo "SHA1        $SHA1"
-echo "SHA256      $SHA256"
-echo "SHA512      $SHA512"
+# Display report in the chosen format
+if [ "$FORMAT" == "markdown" ]; then
+    echo "# File report"
+    echo ""
+    echo "**Original file name:** $FILE_NAME"
+    echo ""
+    echo "**Original file path:** $FILE"
+    echo ""
+    echo "**File size:** $FILE_SIZE bytes ($SIZE_HUMAN)"
+    echo ""
+    echo "**Creation date:** $CREATE_TIME"
+    echo ""
+    echo "**Last modified:** $MOD_TIME"
+    echo ""
+    echo "**File type:** $FILE_TYPE"
+    echo ""
+    # Table cell width is wonky in here, but it's corrected when variables are inserted, as the hash digests are of fixed length
+    echo "| Algorithm  | Hash digest                                                                                                                      |"
+    echo "|------------|----------------------------------------------------------------------------------------------------------------------------------|"
+    echo "| **MD5**    | $MD5                                                                                                 |"
+    echo "| **SHA1**   | $SHA1                                                                                         |"
+    echo "| **SHA256** | $SHA256                                                                 |"
+    echo "| **SHA512** | $SHA512 |"
+else
+    echo "File report"
+    echo ""
+    echo "Original file name:"
+    echo "$FILE_NAME"
+    echo ""
+    echo "Original file path:"
+    echo "$FILE"
+    echo ""
+    echo "File size:"
+    echo "$FILE_SIZE bytes ($SIZE_HUMAN)"
+    echo ""
+    echo "Creation date:"
+    echo "$CREATE_TIME"
+    echo ""
+    echo "Last modified:"
+    echo "$MOD_TIME"
+    echo ""
+    echo "File type:"
+    echo "$FILE_TYPE"
+    echo ""
+    echo "Algorithm   Hash digest"
+    echo "MD5         $MD5"
+    echo "SHA1        $SHA1"
+    echo "SHA256      $SHA256"
+    echo "SHA512      $SHA512"
+fi
