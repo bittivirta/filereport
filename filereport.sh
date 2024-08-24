@@ -62,11 +62,18 @@ fi
 # File type information
 FILE_TYPE=$(file --mime-type -b "$FILE")
 
-# Calculate checksums directly on the file
-MD5=$(md5sum "$FILE" 2>/dev/null || md5 "$FILE" | awk '{print $NF}')
-SHA1=$(sha1sum "$FILE" 2>/dev/null || shasum -a 1 "$FILE" | awk '{print $1}')
-SHA256=$(sha256sum "$FILE" 2>/dev/null || shasum -a 256 "$FILE" | awk '{print $1}')
-SHA512=$(sha512sum "$FILE" 2>/dev/null || shasum -a 512 "$FILE" | awk '{print $1}')
+# Calculate checksums directly on the file and extract hash only
+if [[ "$OSTYPE" == "darwin"* ]]; then
+    MD5=$(md5 "$FILE" | awk '{print $NF}')
+    SHA1=$(shasum -a 1 "$FILE" | awk '{print $1}')
+    SHA256=$(shasum -a 256 "$FILE" | awk '{print $1}')
+    SHA512=$(shasum -a 512 "$FILE" | awk '{print $1}')
+else
+    MD5=$(md5sum "$FILE" | awk '{print $1}')
+    SHA1=$(sha1sum "$FILE" | awk '{print $1}')
+    SHA256=$(sha256sum "$FILE" | awk '{print $1}')
+    SHA512=$(sha512sum "$FILE" | awk '{print $1}')
+fi
 
 # Display report
 echo "File report"
