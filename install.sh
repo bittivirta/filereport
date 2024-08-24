@@ -4,6 +4,8 @@
 # Author: Bittivirta / FI2884270-1
 # Full license at /LICENSE
 
+VERSION="1.0"
+
 # Define the URL and target path
 SCRIPT_URL="https://raw.githubusercontent.com/bittivirta/filereport/main/filereport.sh"
 TARGET_DIR="/usr/local/bin"
