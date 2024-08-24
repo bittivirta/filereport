@@ -9,6 +9,12 @@
 
 This repository contains the source code for the Bittivirta File Report Tool. The tool is used to generate reports from a given file. It is written in Bash and is designed to be used in *nix environments. Linux and macOS are officially supported.
 
+## Screenshot
+
+![Screenshot](/img/screenshot.webp)
+
+Example markdown report generated is available in the [example.md](example.md) file.
+
 ## Usage
 
 The tool can be used without installation by running the following command:
