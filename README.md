@@ -34,6 +34,24 @@ After installation, you can run the tool by typing `filereport` in your terminal
 filereport example.zip
 ```
 
+## Updating
+
+To update the tool to the latest version, run the insallation command again:
+
+```bash
+bash <(curl -Ls 'http://biv.fi/filereport-install')
+```
+
+## Uninstallation
+
+To uninstall the tool, run the following command:
+
+```bash
+rm /usr/local/bin/filereport
+```
+
+The tool is now uninstalled from your system. The installation script does not create any other files or directories. The tool is also self-contained and does not require any dependencies.
+
 ## License
 
 This repository is licensed under the GNU General Public License v3.0. See the [LICENSE](LICENSE) file for more information.
