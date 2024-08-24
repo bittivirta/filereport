@@ -24,6 +24,34 @@ show_version() {
     echo "filereport.sh version $VERSION"
 }
 
+# Check if a command exists
+check_command() {
+    command -v "$1" &>/dev/null
+}
+
+# Determine OS type and set required commands
+REQUIRED_COMMANDS=("stat" "file" "bc")
+
+if [[ "$OSTYPE" == "darwin"* ]]; then
+    REQUIRED_COMMANDS+=("md5" "shasum")
+else
+    REQUIRED_COMMANDS+=("md5sum" "sha1sum" "sha256sum" "sha512sum")
+fi
+
+# Check if required commands are available
+MISSING_COMMANDS=()
+for cmd in "${REQUIRED_COMMANDS[@]}"; do
+    if ! check_command "$cmd"; then
+        MISSING_COMMANDS+=("$cmd")
+    fi
+done
+
+if [ ${#MISSING_COMMANDS[@]} -ne 0 ]; then
+    echo "Error: The following commands are required but not installed: ${MISSING_COMMANDS[*]}"
+    echo "Please install them and run the script again."
+    exit 1
+fi
+
 if [ "$#" -eq 0 ]; then
     show_help
     exit 0
