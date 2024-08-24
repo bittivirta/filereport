@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# License: GPL-3.0-only
+# Author: Bittivirta / FI2884270-1
+# Full license at /LICENSE
+
 # Usage: filereport.sh <file_name>
 
 if [ "$#" -ne 1 ]; then

@@ -10,12 +10,10 @@ WIP
 
 ## License
 
-This repository is licensed under proprietary license, which means that you are not allowed to copy, modify or redistribute the repository without a written permission from Bittivirta.
+This repository is licensed under GNU General Public License v3.0. See the [LICENSE](LICENSE) file for more information.
 
-Forking this repository is NOT allowed and all code changes has to be done by creating a branch to this repository and creating a pull request. Making changes to the main branch is not allowed.
+License: GPL-3.0-only
 
 ## Contributing
 
-You can contribute to the repository by creating a branch and then pull request to this repository. The pull request will be reviewed by other staff member and merged to the main, production branch if it is accepted.
-
-If you see any errors or would like to suggest something in the repository, please create an issue to this repository or contact Bittivirta directly.
+Feel free to contribute to this project by creating a pull request. The project is open source and we welcome all contributions. We use [Conventional Commits](https://www.conventionalcommits.org/) and [Gitmoji](https://gitmoji.dev/) for commit messages. Please follow these conventions when creating commits.
