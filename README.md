@@ -3,6 +3,9 @@
 # File Report Tool
 
 ![License](https://img.shields.io/github/license/bittivirta/filereport?style=for-the-badge)
+![GitHub last commit](https://img.shields.io/github/last-commit/bittivirta/filereport?style=for-the-badge)
+![GitHub release (latest by date)](https://img.shields.io/github/v/release/bittivirta/filereport?style=for-the-badge)
+![Version](https://img.shields.io/badge/version-1.0.0-blue?style=for-the-badge)
 
 This repository contains the source code for the Bittivirta File Report Tool. The tool is used to generate reports from a given file. It is written in Bash and is designed to be used in *nix environments. Linux and macOS are officially supported.
 
